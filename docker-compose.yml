@@ -10,6 +10,7 @@ services:
       - localstack
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/mydatabase
+      - FLYWAY_COMMAND=flyway -url=jdbc:postgresql://db:5432/mydatabase -user=postgres -password=password -locations=filesystem:/app/flyway/sql -X migrate
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=your_access_key
       - AWS_SECRET_ACCESS_KEY=your_secret_key
@@ -26,6 +27,8 @@ services:
 
   db:
     image: postgres
+    ports:
+      - "5432:5432"  # Expose PostgreSQL port
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: postgres

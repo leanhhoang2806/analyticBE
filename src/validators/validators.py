@@ -1,23 +1,12 @@
 
 from fastapi import Depends
 from src.validators.request_validations import JsonWebToken
-
 import logging
+from fastapi.security import OAuth2PasswordBearer
 
 logging.basicConfig(level=logging.INFO)
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-
-def get_bearer_token(request) -> str:
-    logging.error(f"Request headers: {request.headers}")
-    authorization_header = request.headers.get("Authorization")
-    token = authorization_header.split()[1]
-    if authorization_header:
-        return token
-    else:
-        raise Exception("Authorization header not found")
-
-
-def validate_token(token: str = Depends(get_bearer_token)):
-    logging.error(f"Validating token: {token}")
+async def validate_token(token: str = Depends(oauth2_scheme)):
     return JsonWebToken(token).validate()

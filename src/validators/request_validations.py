@@ -20,7 +20,6 @@ class JsonWebToken:
     jwks_uri: str = f"{auth0_issuer_url}.well-known/jwks.json"
 
     def validate(self):
-        logging.error(f"Validating token: {self.jwt_access_token}")
         try:
             jwks_client = jwt.PyJWKClient(self.jwks_uri)
             jwt_signing_key = jwks_client.get_signing_key_from_jwt(

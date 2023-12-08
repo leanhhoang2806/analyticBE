@@ -1,0 +1,7 @@
+-- V1__Initial_Version.sql
+CREATE TABLE s3_files (
+    id UUID PRIMARY KEY NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_url VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
